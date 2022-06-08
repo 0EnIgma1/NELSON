@@ -5,6 +5,8 @@ import os
 import wikipedia
 import webbrowser
 import pywhatkit
+import requests
+from bs4 import BeautifulSoup
 from googlesearch import search
 
 engine = pyt.init()
@@ -18,12 +20,12 @@ def speak(audio):
 def greet():
     hr = int(dt.datetime.now().hour)
     if(hr>=0 and hr<12):
-        speak("good morning !!")
+        speak("Kaalai Vanakkam !!")
     elif(hr>=12 and hr<18):
-        speak("good afternoon !!")
+        speak("Vannakam !!")
     elif(hr>=18 and hr<20):
-        speak("good evening !!")
-    speak("i am nelson...how can i help you?")
+        speak("Maaalai Vannakam !!")
+    speak("Naan dhaaan Nelson, ungalukku enna venum?")
 
 def listen():
     rec = sr.Recognizer()
@@ -41,14 +43,6 @@ def listen():
         print("Say that again please")
         return "None"
     return query
-                                                             #functions are defined 
-def about():
-    speak("I am Nelson....I was devloped by students of Artificial intelligence and data science department....I am still learning and open to criticism ")
-
-def func():
-    speak("i can ")
-    speak("open applications , open websites , search things in google, play youtube videos , tell time and day , tell weather, tell jokes ,fun facts , motivational quotes")
-    speak("what do you want to do ?")
 
 #launch system apps
 def app(appname):
@@ -71,7 +65,28 @@ def google_scearch(ques):
     query = ques
     for j in search(query,tld="co.in",num=10,stop=10,pause=2):
         return(j)
-                                                              #function definition end
+
+
+def weather():
+    city = "lucknow"
+    url = "https://www.google.com/search?q="+"weather"+city
+    html = requests.get(url).content
+    soup = BeautifulSoup(html, 'html.parser')
+    temp = soup.find('div', attrs={'class': 'BNeawe iBp4i AP7Wnd'}).text
+    string = soup.find('div', attrs={'class': 'BNeawe tAd8D AP7Wnd'}).text
+    data = string.split('\n')
+    time = data[0]
+    sky = data[1]
+    listdiv = soup.findAll('div', attrs={'class': 'BNeawe s3v9rd AP7Wnd'})
+    strd = listdiv[5].text
+    pos = strd.find('Wind')
+    other_data = strd[pos:]
+    print("Temperature is", temp)
+    print("Time: ", time)
+    print('Sky Description:', sky)
+    speak("Temperature is "+ temp)
+    speak("The sky is"+ sky)
+
 #main
 if __name__ == "__main__":
     greet()
@@ -83,11 +98,8 @@ if __name__ == "__main__":
             print(now)
             speak(now)
 
-        elif "you" in query:
-            about()
-
-        elif "can" and "do":
-            func()
+        elif "weather" in query:
+            weather()
         
         #launch keyword to launch system apps
         elif "launch" in query:
@@ -111,15 +123,6 @@ if __name__ == "__main__":
             utube = query[6:]
             youtube(utube)
 
-        #elif "open google" in query:
-            #webbrowser.open("www.google.com")
-            
-        #elif "open youtube" in query:
-            #webbrowser.open("www.youtube.com")
-
-        #elif "stack overflow" in query:
-            #webbrowser.open("stackoverflow.com")
-
         elif "search" in query: #returns the best website for asked query
             try:
                 result = query[6:]
@@ -129,19 +132,3 @@ if __name__ == "__main__":
             except:
                 print("please say something after search")
                 speak("please say something after search")
-        #
-
-
-        #elif "nelson play are" in query:
-        #    webbrowser.open("youtube.com/results?search_query=ranga+raatinam")
-
-        #elif "nelson play beast mode" in query:
-        #    webbrowser.open("https://www.youtube.com/watch?v=KOwDgUzijCI&ab_channel=SunTV")
-            
-        #elif "nelson play tamil gaming live" in query:
-        #    webbrowser.open("youtube.com/results?search_query=tamil+gaming+live")
-
-        #elif "nelson play midfail" in query:
-        #    webbrowser.open("youtube.com/results?search_query=midfail+live")
-
-
