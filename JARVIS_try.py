@@ -32,7 +32,7 @@ def joke():
             "my life....ha ha ha ha ha ha",
             "your life....ha ha ha ha ha ha",
             "What did the buffalo say to his son when leaving for college ? bison....ha ha ha ha ha ha",
-            " I visited my new friend in his flat. He told me to make myself at home. So I threw him out. I hate having visitors.",
+            " I visited my new friend in his flat. He told me to make myself at home. So I threw him out. I hate having visitors....ha ha ha ha ha ha",
             ]
     randomjoke = random.choice(myjokes)
     print(randomjoke)
@@ -54,7 +54,7 @@ def motivation():
     speak(randommoti)
 
 def list():
-    print("How are you - General interaction\nTell about yourself - About our virtual assistant\nWhat can you do - Tell about the things VA can do \nTime - Will tell current date and time\nweather - Will tell weather of current location\njoke - Tell a joke\nmotivation - Tell a motivational quote\nopen <name> - Open the given website name\nsearch <name> - Search the given name in google\nIncrease volume - Will increase volume by 28% \nDecrease volume - Will decrease volume by 28%\nlaunch <app_name> - Launch apps in system \nopen uv - Element of surprise ")
+    print("How are you - General interaction\nTell about yourself - About our virtual assistant\nwho are you - About our virtual assistant\nWhat can you do - Tell about the things VA can do \nTime - Will tell current date and time\nweather - Will tell weather of current location\njoke - Tell a joke\nmotivation - Tell a motivational quote\nopen <name> - Open the given website name\nsearch <name> - Search the given name in google\nIncrease volume - Will increase volume by 28% \nDecrease volume - Will decrease volume by 28%\nlaunch <app_name> - Launch apps in system \nopen uv - Element of surprise  \nSleep - Nelson will go to sleep")
 
 def speak(audio):
     engine.say(audio)
@@ -93,7 +93,7 @@ def about():
 
 def func():
     speak("i can ")
-    speak("open applications , open websites , search things in google, play youtube videos , tell time and day , tell weather, tell jokes ,fun facts , motivational quotes")
+    speak("open applications , open websites , search things in google, play youtube videos , tell time and day , tell weather, tell jokes ,fun facts , motivational quotes , control system volume")
     speak("what do you want to do ?")
 
 def increse_vol():
@@ -101,16 +101,36 @@ def increse_vol():
     interface = devices.Activate(
     IAudioEndpointVolume._iid_, CLSCTX_ALL, None)
     volume = cast(interface, POINTER(IAudioEndpointVolume))
+    
     # Get current volume 
     currentVolumeDb = volume.GetMasterVolumeLevel()
-    volume.SetMasterVolumeLevel(currentVolumeDb  +6.0, None)
+    if currentVolumeDb > -5.409796714782715:
+        print("volume is more than 70 percent...please keep it below 70")
+        speak("volume is more than 70 percent...please keep it below 70")
+    else:
+        volume.SetMasterVolumeLevel(currentVolumeDb  +6.0, None)
     # NOTE: -6.0 dB = half volume !
+
+def set_vol(x):
+    devices = AudioUtilities.GetSpeakers()
+    interface = devices.Activate(
+    IAudioEndpointVolume._iid_, CLSCTX_ALL, None)
+    volume = cast(interface, POINTER(IAudioEndpointVolume))
+    
+    # Get current volume 
+    currentVolumeDb = volume.GetMasterVolumeLevel()
+    print(volume.GetMasterVolumeLevel())
+    print(volume.GetVolumeRange())
+    #volume.SetMasterVolumeLevel(currentVolumeDb  +6.0, None)
+    # NOTE: -6.0 dB = half volume !
+
 
 def decrese_vol():
     devices = AudioUtilities.GetSpeakers()
     interface = devices.Activate(
     IAudioEndpointVolume._iid_, CLSCTX_ALL, None)
     volume = cast(interface, POINTER(IAudioEndpointVolume))
+    
     # Get current volume 
     currentVolumeDb = volume.GetMasterVolumeLevel()
     volume.SetMasterVolumeLevel(currentVolumeDb  -6.0, None)
@@ -197,6 +217,9 @@ if __name__ == "__main__":
         elif "tell about you" in query:
             about()
 
+        elif "who are you" in query:
+            about()
+
         elif "increase volume"  in query:
             increse_vol()
         
@@ -208,6 +231,12 @@ if __name__ == "__main__":
 
         elif "weather" in query:
             weather()
+
+        elif "set" in query:
+            y = query[10:]
+            y  = float(y)
+            k = y/100
+            set_vol(k)
         
         #launch keyword to launch system apps
         elif "launch" in query:
