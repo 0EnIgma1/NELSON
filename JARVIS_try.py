@@ -17,6 +17,9 @@ import random
 engine = pyt.init()
 voices = engine.getProperty('voices')
 engine.setProperty('voice',voices[0].id)
+engine.setProperty('rate', 190)
+engine.setProperty('volume', 0.7)
+
 def joke():
     myjokes = ["bored of being bored because being bored is boring....ha ha ha ha ha ha",
             "What do you call an Englishman with an IQ of 50?  Colonel, sir.....ha ha ha ha ha ha",
