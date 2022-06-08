@@ -97,8 +97,24 @@ def increse_vol():
     volume = cast(interface, POINTER(IAudioEndpointVolume))
     # Get current volume 
     currentVolumeDb = volume.GetMasterVolumeLevel()
-    volume.SetMasterVolumeLevel(currentVolumeDb  +6.0, None)
+    if currentVolumeDb > -5.409796714782715:
+        speak("volume is more than 70 percent...please keep it below 70")
+    else:
+        volume.SetMasterVolumeLevel(currentVolumeDb  +6.0, None)
     # NOTE: -6.0 dB = half volume !
+
+def set_vol(x):
+    devices = AudioUtilities.GetSpeakers()
+    interface = devices.Activate(
+    IAudioEndpointVolume._iid_, CLSCTX_ALL, None)
+    volume = cast(interface, POINTER(IAudioEndpointVolume))
+    # Get current volume 
+    currentVolumeDb = volume.GetMasterVolumeLevel()
+    print(volume.GetMasterVolumeLevel())
+    print(volume.GetVolumeRange())
+    #volume.SetMasterVolumeLevel(currentVolumeDb  +6.0, None)
+    # NOTE: -6.0 dB = half volume !
+
 
 def decrese_vol():
     devices = AudioUtilities.GetSpeakers()
@@ -128,9 +144,9 @@ def website(query):
 
 #watch youtube videos
 def youtube(query):
-    utube = query[6:]
-    speak("Opening youtube "+ video)
-    pywhatkit.playonyt(video)
+    vedio = query[6:]
+    speak("Opening youtube "+ vedio)
+    pywhatkit.playonyt(vedio)
 
 def google_scearch(ques):
     query = ques
@@ -189,6 +205,12 @@ if __name__ == "__main__":
 
         elif "weather" in query:
             weather()
+
+        elif "set" in query:
+            y = query[10:]
+            y  = float(y)
+            k = y/100
+            set_vol(k)
         
         #launch keyword to launch system apps
         elif "launch" in query:
