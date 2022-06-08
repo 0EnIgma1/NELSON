@@ -12,10 +12,40 @@ from ctypes import cast, POINTER
 from comtypes import CLSCTX_ALL
 from pycaw.pycaw import AudioUtilities, IAudioEndpointVolume
 import math
+import random
 
 engine = pyt.init()
 voices = engine.getProperty('voices')
 engine.setProperty('voice',voices[0].id)
+def joke():
+    myjokes = ["bored of being bored because being bored is boring....ha ha ha ha ha ha",
+            "What do you call an Englishman with an IQ of 50?  Colonel, sir.....ha ha ha ha ha ha",
+            "They say an Englishman laughs three times at a joke. The first timewhen everybody gets it, the second a week later when he thinks he getsit, the third time a month later when somebody explains it to him.....ha ha ha ha ha ha",
+            "Why do cows wear bells?Because their horns don't work....ha ha ha ha ha ha",
+            "my life....ha ha ha ha ha ha",
+            "your life....ha ha ha ha ha ha",
+            "What did the buffalo say to his son when leaving for college ? bison....ha ha ha ha ha ha",
+            " I visited my new friend in his flat. He told me to make myself at home. So I threw him out. I hate having visitors.",
+            ]
+    randomjoke = random.choice(myjokes)
+    print(randomjoke)
+    speak(randomjoke)
+
+def motivation():
+    moti = ["its a shame for a man to grow old without seeing the beauty and strength his body is capable of",
+            "one whos ideal is mortal will die when his ideal dies,but when ones ideal is immortal he himself must become immortal to attain it",
+            "pain is only in the mind",
+            "Success is not how high you have climbed, but how you make a positive difference to the world.",
+            "Never lose hope. Storms make people stronger and never last forever.",
+            "strong men make great times,great times make weak men,weak men make tough times,tough times make strong men",
+            "All our dreams can come true, if we have the courage to pursue them.",
+            "The best time to plant a tree was 20 years ago. The second best time is now.",
+            "If people are doubting how far you can go, go so far that you can’t hear them anymore.",
+            "Everything you can imagine is real."]
+    randommoti = random.choice(moti)
+    print(randommoti)
+    speak(randommoti)
+
 
 def speak(audio):
     engine.say(audio)
@@ -136,6 +166,12 @@ if __name__ == "__main__":
             print(now)
             speak(now)
 
+        elif "joke" in query:
+            joke()
+
+        elif "motivation" in query:
+            motivation()
+        
         elif "you" in query:
             about()
 
@@ -179,5 +215,5 @@ if __name__ == "__main__":
                 print("please say something after search")
                 speak("please say something after search")
 
-        elif "stop" in query:
+        elif query=="stop" or "end":
             break
