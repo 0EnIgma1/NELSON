@@ -32,7 +32,7 @@ def listen():
     with sr.Microphone() as source:
         speak("listening")
         print("Listening....")
-        audio = rec.listen(source)
+        audio = rec.listen(source,phrase_time_limit=15)
     try:
         print("Recognizing...")
         query = rec.recognize_google(audio,language='en-in')
@@ -45,19 +45,23 @@ def listen():
     return query
 
 #launch system apps
-def app(appname):
+def app(query):
+    appname = query[7:]
+    print(appname)
     speak('opening '+ appname)
     appname = appname.replace(" ","")
     os.system(appname)
 
 #open websites
-def website(site):
+def website(query):
+    site = query[5:]
     speak("opening website "+ site)
     site = site.replace(" ","")
     webbrowser.open("www."+site+".com")
 
 #watch youtube videos
-def youtube(video):
+def youtube(query):
+    utube = query[6:]
     speak("Opening youtube "+ video)
     pywhatkit.playonyt(video)
 
@@ -68,7 +72,7 @@ def google_scearch(ques):
 
 
 def weather():
-    city = "lucknow"
+    city = "chennai"
     url = "https://www.google.com/search?q="+"weather"+city
     html = requests.get(url).content
     soup = BeautifulSoup(html, 'html.parser')
@@ -103,9 +107,7 @@ if __name__ == "__main__":
         
         #launch keyword to launch system apps
         elif "launch" in query:
-            appname = query[7:]
-            print(appname)
-            app(appname)
+            app(query)
 
         elif "open easwari" in query:
             webbrowser.open("https://ai.srmeaswari.ac.in/")    
@@ -115,13 +117,11 @@ if __name__ == "__main__":
 
         #open keyword to open websites
         elif "open" in query:
-            site = query[5:]
-            website(site)
+            website(query)
 
         #watch keyword to search and watch youtube videos
         elif "watch" in query:
-            utube = query[6:]
-            youtube(utube)
+            youtube(query)
 
         elif "search" in query: #returns the best website for asked query
             try:
