@@ -13,6 +13,10 @@ from comtypes import CLSCTX_ALL
 from pycaw.pycaw import AudioUtilities, IAudioEndpointVolume
 import math
 import random
+import time
+
+r = sr.Recognizer()
+mymic = sr.Microphone(device_index=1)
 
 engine = pyt.init()
 voices = engine.getProperty('voices')
@@ -36,7 +40,7 @@ def joke():
 
 def motivation():
     moti = ["its a shame for a man to grow old without seeing the beauty and strength his body is capable of",
-            "one whos ideal is mortal will die when his ideal dies,but when ones ideal is immortal he himself must become immortal to attain it",
+            "one whos ideal is mortal will die when his ideal dies , but when ones ideal is immortal he himself must become immortal to attain it",
             "pain is only in the mind",
             "Success is not how high you have climbed, but how you make a positive difference to the world.",
             "Never lose hope. Storms make people stronger and never last forever.",
@@ -49,6 +53,8 @@ def motivation():
     print(randommoti)
     speak(randommoti)
 
+def list():
+    print("How are you - General interaction\nTell about yourself - About our virtual assistant\nWhat can you do - Tell about the things VA can do \nTime - Will tell current date and time\nweather - Will tell weather of current location\njoke - Tell a joke\nmotivation - Tell a motivational quote\nopen <name> - Open the given website name\nsearch <name> - Search the given name in google\nIncrease volume - Will increase volume by 28% \nDecrease volume - Will decrease volume by 28%\nlaunch <app_name> - Launch apps in system \nopen uv - Element of surprise ")
 
 def speak(audio):
     engine.say(audio)
@@ -129,14 +135,27 @@ def website(query):
 #watch youtube videos
 def youtube(query):
     utube = query[6:]
-    speak("Opening youtube "+ video)
-    pywhatkit.playonyt(video)
+    speak("Opening youtube "+ utube)
+    pywhatkit.playonyt(utube)
 
 def google_scearch(ques):
     query = ques
     for j in search(query,tld="co.in",num=10,stop=10,pause=2):
         return(j)
 
+def gogo():
+    slepcom = ["Mention the duration you want me to go sleep",
+    "Mention the duration you dont want me to disturb you",
+    "Mention the duration you want me to be silent",
+    "Mention the duration you want inner peace"]
+    comm = random.choice(slepcom)
+    print(comm)
+    speak(comm)
+    ss = int(input())  #input is given manually we can convert it to be directly given by voice
+    time.sleep(ss)
+    print("Nelson is back")
+    speak("nelson is back...yyyyyaaaaaay")
+    
 
 def weather():
     city = "chennai"
@@ -218,5 +237,13 @@ if __name__ == "__main__":
                 print("please say something after search")
                 speak("please say something after search")
 
+        elif "how are you" in query:
+            speak("i am fine human...how about you ?")
+        
+        elif query=="show list":
+            list()
+
+        elif query=="sleep":
+            gogo()
         #elif query=="stop" or "end":
-            #break
+            #exit()
