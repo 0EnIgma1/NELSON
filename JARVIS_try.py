@@ -41,6 +41,14 @@ def listen():
         print("Say that again please")
         return "None"
     return query
+                                                             #functions are defined 
+def about():
+    speak("I am Nelson....I was devloped by students of Artificial intelligence and data science department....I am still learning and open to criticism ")
+
+def func():
+    speak("i can ")
+    speak("open applications , open websites , search things in google, play youtube videos , tell time and day , tell weather, tell jokes ,fun facts , motivational quotes")
+    speak("what do you want to do ?")
 
 #launch system apps
 def app(appname):
@@ -63,10 +71,10 @@ def google_scearch(ques):
     query = ques
     for j in search(query,tld="co.in",num=10,stop=10,pause=2):
         return(j)
-
+                                                              #function definition end
 #main
 if __name__ == "__main__":
-    greet();
+    greet()
     while True:
         query=listen().lower()
 
@@ -74,6 +82,12 @@ if __name__ == "__main__":
             now = dt.datetime.now().strftime("%d/%m/%Y %H:%M:%S")
             print(now)
             speak(now)
+
+        elif "you" in query:
+            about()
+
+        elif "can" and "do":
+            func()
         
         #launch keyword to launch system apps
         elif "launch" in query:
