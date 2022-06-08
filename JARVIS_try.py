@@ -59,7 +59,7 @@ def greet():
         speak("Vannakam !!")
     elif(hr>=18 and hr<20):
         speak("Maaalai Vannakam !!")
-    speak("Naan dhaaan Nelson, ungalukku enna venum?")
+    speak("I am Nelson, how can i help?")
 
 def listen():
     rec = sr.Recognizer()
