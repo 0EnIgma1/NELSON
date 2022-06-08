@@ -18,12 +18,12 @@ def speak(audio):
 def greet():
     hr = int(dt.datetime.now().hour)
     if(hr>=0 and hr<12):
-        speak("Kaalai Vanakkam !!")
+        speak("good morning !!")
     elif(hr>=12 and hr<18):
-        speak("Vannakam !!")
+        speak("good afternoon !!")
     elif(hr>=18 and hr<20):
-        speak("Maaalai Vannakam !!")
-    speak("Naan dhaaan Nelson, ungalukku enna venum?")
+        speak("good evening !!")
+    speak("i am nelson...how can i help you?")
 
 def listen():
     rec = sr.Recognizer()
