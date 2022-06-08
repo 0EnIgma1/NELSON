@@ -8,6 +8,10 @@ import pywhatkit
 import requests
 from bs4 import BeautifulSoup
 from googlesearch import search
+from ctypes import cast, POINTER
+from comtypes import CLSCTX_ALL
+from pycaw.pycaw import AudioUtilities, IAudioEndpointVolume
+import math
 
 engine = pyt.init()
 voices = engine.getProperty('voices')
@@ -44,6 +48,36 @@ def listen():
         return "None"
     return query
 
+    #functions are defined 
+def about():
+    speak("I am Nelson....I was devloped by students of Artificial intelligence and data science department....I am still learning and open to criticism ")
+
+def func():
+    speak("i can ")
+    speak("open applications , open websites , search things in google, play youtube videos , tell time and day , tell weather, tell jokes ,fun facts , motivational quotes")
+    speak("what do you want to do ?")
+
+def increse_vol():
+    devices = AudioUtilities.GetSpeakers()
+    interface = devices.Activate(
+    IAudioEndpointVolume._iid_, CLSCTX_ALL, None)
+    volume = cast(interface, POINTER(IAudioEndpointVolume))
+    # Get current volume 
+    currentVolumeDb = volume.GetMasterVolumeLevel()
+    volume.SetMasterVolumeLevel(currentVolumeDb  +6.0, None)
+    # NOTE: -6.0 dB = half volume !
+
+def decrese_vol():
+    devices = AudioUtilities.GetSpeakers()
+    interface = devices.Activate(
+    IAudioEndpointVolume._iid_, CLSCTX_ALL, None)
+    volume = cast(interface, POINTER(IAudioEndpointVolume))
+    # Get current volume 
+    currentVolumeDb = volume.GetMasterVolumeLevel()
+    volume.SetMasterVolumeLevel(currentVolumeDb  -6.0, None)
+    # NOTE: -6.0 dB = half volume !
+
+  
 #launch system apps
 def app(query):
     appname = query[7:]
@@ -102,6 +136,18 @@ if __name__ == "__main__":
             print(now)
             speak(now)
 
+        elif "you" in query:
+            about()
+
+        elif "increase volume"  in query:
+            increse_vol()
+        
+        elif "decrease volume" in query:
+            decrese_vol()
+ 
+        elif "what can you do" in query:
+            func()
+
         elif "weather" in query:
             weather()
         
@@ -132,3 +178,6 @@ if __name__ == "__main__":
             except:
                 print("please say something after search")
                 speak("please say something after search")
+
+        elif "stop" in query:
+            break
