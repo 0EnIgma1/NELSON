@@ -175,7 +175,7 @@ if __name__ == "__main__":
         elif "motivation" in query:
             motivation()
         
-        elif "you" in query:
+        elif "tell about you" in query:
             about()
 
         elif "increase volume"  in query:
@@ -218,5 +218,5 @@ if __name__ == "__main__":
                 print("please say something after search")
                 speak("please say something after search")
 
-        elif query=="stop" or "end":
-            break
+        #elif query=="stop" or "end":
+            #break
