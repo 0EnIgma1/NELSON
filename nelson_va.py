@@ -197,6 +197,13 @@ def weather():
     speak("Temperature is "+ temp)
     speak("The sky is"+ sky)
 
+def devlopers():
+    speak("they are group of A I students from easwari engineering college....let me open their linked in profiles for you")
+    webbrowser.open("https://www.linkedin.com/in/naveen-kumar-s-921990210")
+    webbrowser.open("www.linkedin.com/in/arjun-prakash-589348211")
+    webbrowser.open("https://www.linkedin.com/in/raghuram-s-647b18213")
+    webbrowser.open("https://www.linkedin.com/in/hari-vigneshwaran-97499a213")
+
 #main
 if __name__ == "__main__":
     greet()
@@ -274,5 +281,8 @@ if __name__ == "__main__":
 
         elif query=="sleep":
             gogo()
+
+        elif query =="who created you" or "devlopers":
+            devlopers()
         #elif query=="stop" or "end":
             #exit()
