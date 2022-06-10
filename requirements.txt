@@ -7,3 +7,7 @@ pywhatkit
 google
 bs4
 pycaw
+# pipwin install pyaudio
+requests
+time
+random
