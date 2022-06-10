@@ -54,7 +54,7 @@ def motivation():
     speak(randommoti)
 
 def list():
-    print("How are you - General interaction\nTell about yourself - About our virtual assistant\nwho are you - About our virtual assistant\nWhat can you do - Tell about the things VA can do \nTime - Will tell current date and time\nweather - Will tell weather of current location\njoke - Tell a joke\nmotivation - Tell a motivational quote\nopen <name> - Open the given website name\nsearch <name> - Search the given name in google\nIncrease volume - Will increase volume by 28% \nDecrease volume - Will decrease volume by 28%\nlaunch <app_name> - Launch apps in system \nopen uv - Element of surprise  \nSleep - Nelson will go to sleep")
+    print("How are you - General interaction\nTell about yourself - About our virtual assistant\nwho are you - About our virtual assistant\nWhat can you do - Tell about the things VA can do \nWho made you / Who created you - About the creators\nTime - Will tell current date and time\nweather - Will tell weather of current location\njoke - Tell a joke\nmotivation - Tell a motivational quote\nopen <name> - Open the given website name\nsearch <name> - Search the given name in google\nIncrease volume - Will increase volume by 28% \nDecrease volume - Will decrease volume by 28%\nlaunch <app_name> - Launch apps in system \nopen uv - Element of surprise  \nSleep - Nelson will go to sleep\nRoast - Roast")
 
 def speak(audio):
     engine.say(audio)
@@ -63,11 +63,11 @@ def speak(audio):
 def greet():
     hr = int(dt.datetime.now().hour)
     if(hr>=0 and hr<12):
-        speak("Kaalai Vanakkam !!")
+        speak("Good morning !!")
     elif(hr>=12 and hr<18):
-        speak("Vannakam !!")
+        speak("Good afternoon !!")
     elif(hr>=18 and hr<20):
-        speak("Maaalai Vannakam !!")
+        speak("Good evening  !!")
     speak("I am Nelson, how can i help?")
 
 def listen():
@@ -82,8 +82,8 @@ def listen():
         query = query.lower()
         print("You said:", query ,"\n")
     except Exception as e:
-        speak("say that again please")
-        print("Say that again please")
+        speak(" Say that again human")
+        print("Say that again human")
         return "None"
     return query
 
@@ -171,11 +171,22 @@ def gogo():
     comm = random.choice(slepcom)
     print(comm)
     speak(comm)
-    ss = int(input())  #input is given manually we can convert it to be directly given by voice
-    time.sleep(ss)
+    ss = listen()
+    ss_int = int(ss)
+    #ss = int(input())  #input is given manually we can convert it to be directly given by voice
+    time.sleep(ss_int)
     print("Nelson is back")
     speak("nelson is back...yyyyyaaaaaay")
     
+def roast():
+    rlist = ["Light travels faster than sound, which is why you seemed bright until you spoke.",
+             "You have so many gaps in your teeth it looks like your tongue is in jail.",
+             "time illa",
+             "Your face makes onions cry.",
+             " You bring everyone so much joy… when you leave the room."]
+    rand = random.choice(rlist)
+    print(rand)
+    speak(rand)
 
 def weather():
     city = "chennai"
@@ -198,14 +209,22 @@ def weather():
     speak("The sky is"+ sky)
 
 def devlopers():
-    speak("they are group of A I students from easwari engineering college....let me open their linked in profiles for you")
+    speak("they are group of Artificial intelligence and data science students from easwari engineering college....let me open their linked in profiles for you")
     webbrowser.open("https://www.linkedin.com/in/naveen-kumar-s-921990210")
     webbrowser.open("www.linkedin.com/in/arjun-prakash-589348211")
     webbrowser.open("https://www.linkedin.com/in/raghuram-s-647b18213")
     webbrowser.open("https://www.linkedin.com/in/hari-vigneshwaran-97499a213")
 
+
+
+str = " NELSON - Voice Assistant "
 #main
 if __name__ == "__main__":
+    print("")
+    print("#"*50)
+    print(str.center(50,"*"))
+    print("#"*50)
+    print("")
     greet()
     while True:
         query=listen().lower()
@@ -276,13 +295,19 @@ if __name__ == "__main__":
         elif "how are you" in query:
             speak("i am fine human...how about you ?")
         
-        elif query=="show list":
+        elif query=="show commands":
             list()
 
         elif query=="sleep":
             gogo()
 
-        elif query =="who created you" or "devlopers":
+        elif (query == "who created you") or (query == "who made you"):
             devlopers()
+        
+        elif "roast" in query:
+            roast()
+        
+        else:
+            continue
         #elif query=="stop" or "end":
             #exit()
