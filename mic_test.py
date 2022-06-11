@@ -6,3 +6,4 @@ with my_mic as source:
     print("Say now!!!!")
     audio = r.listen(source) #take voice input from the microphone
 print(r.recognize_google(audio, language='en-us')) #to print voice into text
+#showing example to kanish
