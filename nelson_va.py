@@ -14,6 +14,7 @@ from pycaw.pycaw import AudioUtilities, IAudioEndpointVolume
 import math
 import random
 import time
+import schedule
 
 r = sr.Recognizer()
 mymic = sr.Microphone(device_index=1)
@@ -96,6 +97,19 @@ def func():
     speak("open applications , open websites , search things in google, play youtube videos , tell time and day , tell weather, tell jokes ,fun facts , motivational quotes , control system volume")
     speak("what do you want to do ?")
 
+def hydrate():
+    print("Drink water human...stay hydrated ")
+    speak("Drink water human...stay hydrated ")
+
+def takebk():
+    print("take a break human...you deserve it")
+    speak("take a break human...you deserve it")
+
+def remind():
+    speak("what you want me to remind ?")
+    thing = listen()
+    print(thing)
+
 def increse_vol():
     devices = AudioUtilities.GetSpeakers()
     interface = devices.Activate(
@@ -139,11 +153,13 @@ def decrese_vol():
   
 #launch system apps
 def app(query):
+    #appdict = {"paint":,"excel":,"spreadsheet":,"word":,"powerpoint":,"presentation":,"google":,"chrome":}
     appname = query[7:]
     print(appname)
     speak('opening '+ appname)
     appname = appname.replace(" ","")
-    os.system(appname)
+    os.system("excel")
+    return
 
 #open websites
 def website(query):
@@ -226,7 +242,10 @@ if __name__ == "__main__":
     print("#"*50)
     print("")
     greet()
+    schedule.every(2).minutes.do(hydrate)
+    schedule.every(1).minutes.do(takebk)
     while True:
+        schedule.run_pending()
         query=listen().lower()
 
         if "time" in query:
@@ -307,6 +326,8 @@ if __name__ == "__main__":
         elif "roast" in query:
             roast()
         
+        elif "remind" in query:
+            remind()
         else:
             continue
         #elif query=="stop" or "end":
