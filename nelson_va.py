@@ -17,6 +17,7 @@ import time
 import schedule
 import speedtest
 import pyautogui
+import sqlite3
 
 r = sr.Recognizer()
 mymic = sr.Microphone(device_index=1)
@@ -259,6 +260,59 @@ def wiki(query):
     speak("Accroding to wikipedia")
     speak(result)
 
+#database Functions
+
+def create_task():
+    conn = sqlite3.connect('tasks.db')
+    print ("Opened database successfully")
+
+##conn.execute("DROP TABLE COMPANY;")
+
+    conn.execute('''CREATE TABLE if not exists COMPANY
+         (id INT PRIMARY KEY     NOT NULL,
+         task           TEXT    NOT NULL,
+         pri       INT     NOT NULL);''')
+
+def insert_task():
+
+    value = int(input("how many values to insert:"))
+    conn = sqlite3.connect('test.db')
+    print ("Opened database successfully")
+
+    for i in range(value):
+        id1 = int(input("enter id:"))
+        task = input("enter task:")
+        priority = int(input("enter priority:"))
+
+        a = id1
+        b = task
+        c = priority
+        
+
+        conn.execute("""INSERT INTO COMPANY (id,task,pri) VALUES (?,?,?)""",(a,b,c))
+
+
+        conn.commit()
+        print ("Records created successfully")
+    conn.close()
+
+def show():
+    conn = sqlite3.connect('tasks.db')
+
+    db = conn.execute("SELECT * FROM COMPANY")
+    print(db.fetchall())
+    conn.close()
+
+def delete():
+    d_id = int(input("enter task id to delete:"))
+    conn = sqlite3.connect('tasks.db')
+
+    conn.execute("""DELETE from COMPANY where ID = ?""",(d_id,))
+    conn.commit()
+    print ("Total number of rows deleted :"), conn.total_changes
+
+    show()
+
 str = " NELSON - Voice Assistant "
 #main
 if __name__ == "__main__":
@@ -389,6 +443,12 @@ if __name__ == "__main__":
             print("working on it")
             speak("working on it")
             speed()
+        elif "create task" in query:
+            insert_task()
+        elif "show task" in query:
+            show()
+        elif "delete task" in query:
+            delete()
 
         #Alarm
         elif "going to sleep" in query or "wake me" in query:

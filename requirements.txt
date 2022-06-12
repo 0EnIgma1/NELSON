@@ -11,3 +11,5 @@ pycaw
 requests
 time
 random
+schedule
+speedtest
