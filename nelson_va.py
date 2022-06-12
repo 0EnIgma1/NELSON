@@ -15,6 +15,8 @@ import math
 import random
 import time
 import schedule
+import speedtest
+import pyautogui
 
 r = sr.Recognizer()
 mymic = sr.Microphone(device_index=1)
@@ -70,6 +72,19 @@ def greet():
     elif(hr>=18 and hr<20):
         speak("Good evening  !!")
     speak("I am Nelson, how can i help?")
+
+def speed():
+    st = speedtest.Speedtest()
+    d_speed = st.download()
+    u_speed = st.upload()
+    KB = 1024
+    MB = KB * 1024
+    d_mb = int(d_speed/MB)
+    u_mb = int(u_speed/MB)
+    print(f"Download speed : {d_mb} MBPS")
+    speak(f"Your download speed is {d_mb} MB per second")
+    print(f"Upload speed : {u_mb} MBPS")
+    speak(f"Your upload speed is {u_mb} MB per second")
 
 def listen():
     rec = sr.Recognizer()
@@ -168,6 +183,12 @@ def website(query):
     site = site.replace(" ","")
     webbrowser.open("www."+site+".com")
 
+def news(query):
+    headlines = query[12:]
+    speak("opening todays news"+ headlines)
+    headlines = headlines.replace(" ","+")
+    webbrowser.open("https://news.google.com/search?for="+headlines+"&hl=en-IN&gl=IN&ceid=IN%3Aen")
+
 #watch youtube videos
 def youtube(query):
     utube = query[6:]
@@ -231,7 +252,12 @@ def devlopers():
     webbrowser.open("https://www.linkedin.com/in/raghuram-s-647b18213")
     webbrowser.open("https://www.linkedin.com/in/hari-vigneshwaran-97499a213")
 
-
+def wiki(query):
+    speak("searching .......")
+    query = query.replace("wikipedia", "")
+    result = wikipedia.summary(query, sentences=2)
+    speak("Accroding to wikipedia")
+    speak(result)
 
 str = " NELSON - Voice Assistant "
 #main
@@ -259,6 +285,36 @@ if __name__ == "__main__":
         elif "motivation" in query:
             motivation()
         
+        elif "wikipedia" in query:
+            wiki(query)
+        
+        elif ("headlines" in query) or ("news" in query):
+            news(query)
+
+        elif 'minimise the windows 'in query or'minimise the window'in query :
+            speak("minimize the window")
+            pyautogui.hotkey('Win','d')
+
+        elif 'maximize the windows'in query or'maximize the window'in query :
+
+            speak("maximizing the window")
+            pyautogui.hotkey('Win', 'd')
+
+        elif 'new tab'in query:
+            pyautogui.hotkey('ctrl','t')
+
+        elif 'new file'in query:
+            pyautogui.hotkey('ctrl','n')
+
+        elif 'switch windows'in query  or 'switch tab'in query:
+            pyautogui.hotkey('ctrl','shift','tab')
+
+        elif 'switch the app' in query:
+            pyautogui.hotkey('alt','tab')
+
+        elif 'close window' in query:
+            pyautogui.hotkey('alt','f4')
+
         elif "tell about you" in query:
             about()
 
@@ -328,6 +384,32 @@ if __name__ == "__main__":
         
         elif "remind" in query:
             remind()
+
+        elif "speed" in query:
+            print("working on it")
+            speak("working on it")
+            speed()
+
+        #Alarm
+        elif "going to sleep" in query or "wake me" in query:
+            speak("When should I wake you up sir ? Enter the time")
+            time = input("Enter the Time :")
+
+            while True:
+                Time_Ac = datetime.datetime.now()
+                now = Time_Ac.strftime("%H:%M:%S")
+
+                if now == time:
+                    speak("Time to Wake up Sir")
+                    playsound("surprise.mp3")
+                    speak("Alarm Closed")
+
+                elif now>time:
+                    break
+
+        elif "know hari" in query or "know naveen" in query or "know raghu" in query or "know kesava" in query or "know arjun" in query:
+                speak(f"yes i know him. Do you believe in god? i do believe. He is my god. becuase of him im able to talk to you. he is a very nice person. You would like him if you start talking with him")
+        
         else:
             continue
         #elif query=="stop" or "end":
