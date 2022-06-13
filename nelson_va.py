@@ -87,6 +87,7 @@ def speed():
     print(f"Upload speed : {u_mb} MBPS")
     speak(f"Your upload speed is {u_mb} MB per second")
 
+
 def listen():
     rec = sr.Recognizer()
     with sr.Microphone() as source:
@@ -183,6 +184,13 @@ def website(query):
     speak("opening website "+ site)
     site = site.replace(" ","")
     webbrowser.open("www."+site+".com")
+
+def kaggle(query):
+    dset = query[14:]
+    speak("these are the datasets")
+    site = site.replace(" ","")
+    webbrowser.open("https://www.kaggle.com/search?q="+dset)
+
 
 def news(query):
     headlines = query[12:]
@@ -335,6 +343,9 @@ if __name__ == "__main__":
 
         elif "joke" in query:
             joke()
+        
+        elif "search dataset" in query:
+            kaggle(query)
 
         elif "motivation" in query:
             motivation()
