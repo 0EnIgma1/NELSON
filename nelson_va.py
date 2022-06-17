@@ -74,6 +74,7 @@ def greet():
         speak("Good evening  !!")
     speak("I am Nelson, how can i help?")
 
+
 def speed():
     st = speedtest.Speedtest()
     d_speed = st.download()
@@ -203,6 +204,23 @@ def youtube(query):
     utube = query[6:]
     speak("Opening youtube "+ utube)
     pywhatkit.playonyt(utube)
+
+def play_song(query):
+    os.startfile(r"C:\Users\Arjun\OneDrive\Desktop\Spotify.lnk")
+    for window in pyautogui.getAllWindows():
+        if 'spotify' in window.title.lower():
+            window.show()
+            print('spotify window activated')
+            song = query[21:]  # break down text list into single words for later usage
+            time.sleep(5.5)
+            pyautogui.click(x=72,y=107) # this is the search bar location on my machine, when the window is maximized
+            time.sleep(1)
+            pyautogui.hotkey('ctrl','a') # clearing the search bar
+            pyautogui.press('backspace') # clearing the search bar                time.sleep(0.5)
+            pyautogui.write(song) # because we assumed that the artist was the last word of the voice command
+            time.sleep(3)
+            pyautogui.click(x=766,y=232) # this is the play button location on my machine, when the window is maximized
+            break
 
 def google_scearch(ques):
     query = ques
@@ -373,6 +391,10 @@ if __name__ == "__main__":
 
         elif 'switch windows'in query  or 'switch tab'in query:
             pyautogui.hotkey('ctrl','shift','tab')
+
+        elif 'spotify' in query:
+            play_song(query)
+
 
         elif 'switch the app' in query:
             pyautogui.hotkey('alt','tab')
