@@ -199,6 +199,12 @@ def news(query):
     headlines = headlines.replace(" ","+")
     webbrowser.open("https://news.google.com/search?for="+headlines+"&hl=en-IN&gl=IN&ceid=IN%3Aen")
 
+def maps(query):
+    location = query[9:]
+    speak("finding"+location+"in google eearth")
+    location = location.replace(" ","+")
+    webbrowser.open("https://earth.google.com/web/search/"+location)
+
 #watch youtube videos
 def youtube(query):
     utube = query[6:]
@@ -370,6 +376,9 @@ if __name__ == "__main__":
         
         elif "wikipedia" in query:
             wiki(query)
+
+        elif "where is" in query:
+            maps(query)
         
         elif ("headlines" in query) or ("news" in query):
             news(query)
