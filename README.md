@@ -13,3 +13,5 @@ Virtual Assistant - Nelson
 > - Sleep
 > - UV 
 > - Schedule Tasks
+> - Google maps and Google Earth
+> - Spotify 
