@@ -18,6 +18,7 @@ import schedule
 import speedtest
 import pyautogui
 import sqlite3
+from AppOpener import open, close
 
 r = sr.Recognizer()
 mymic = sr.Microphone(device_index=1)
@@ -174,10 +175,9 @@ def app(query):
     #appdict = {"paint":,"excel":,"spreadsheet":,"word":,"powerpoint":,"presentation":,"google":,"chrome":}
     appname = query[7:]
     print(appname)
-    speak('opening '+ appname)
+    speak('Launching '+ appname)
     appname = appname.replace(" ","")
-    os.system("excel")
-    return
+    open(appname, match_closest=True)
 
 #open websites
 def website(query):
